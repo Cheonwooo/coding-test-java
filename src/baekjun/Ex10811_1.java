@@ -61,5 +61,4 @@ public class Ex10811_1 {
 			System.out.print(list.get(i) + " ");
 		}
 	}
-
 }

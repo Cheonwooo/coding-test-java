@@ -5,6 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
+/*
+ * 아이디어 : 이중 포인터 방법으로 배열을 역순으로 정렬
+ * 
+ * 시간복잡도 : m * n
+ * 
+ * 자료구조 : int[]
+ */
+
 public class Ex10811_2 {
 
 	public static void main(String[] args) throws IOException{
@@ -30,7 +38,7 @@ public class Ex10811_2 {
 		}
 		
 		for (int i = 0; i < n; i++) {
-			System.out.print(box[i]);
+			System.out.print(box[i] + " ");
 		}
 	}
 	
