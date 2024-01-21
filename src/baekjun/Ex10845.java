@@ -36,7 +36,7 @@ public class Ex10845 {
 			System.out.println(q.size());
 		} else if (option.equals("empty")) {
 			if (q.size() == 0) {
-				System.out.println(-1);
+				System.out.println(1);
 			} else {
 				System.out.println(0);
 			}
