@@ -23,5 +23,4 @@ public class Ex2750 {
 			System.out.println(arr[i]);
 		}
 	}
-
 }
