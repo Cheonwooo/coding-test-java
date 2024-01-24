@@ -64,5 +64,4 @@ public class Ex1406 {
 		}
 		System.out.println(sb);
 	}
-
 }
