@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
  * 이친수의 개수를 저장할 int[][]
  * dp값을 저장할 int[]
  * 정답을 저장할 int
+ * 
  */
 
 public class Ex2193 {
@@ -48,8 +49,7 @@ public class Ex2193 {
 			dp[i] = pinary[i][0] + pinary[i][1];
 		}
 		
-		long answer = dp[n];
-		System.out.println(answer);
+		System.out.println(dp[n]);
 	}
 
 }
