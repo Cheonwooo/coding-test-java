@@ -13,6 +13,7 @@ import java.util.StringTokenizer;
  * dp[n][i] = max(dp[n-1][i-1], dp[n-1][i]) + arr[n][i]
  * 2중 for문 이용 i가 3부터 n까지 for문, 2부터 i까지 for문
  * 
+ * 
  * 시간복잡도
  * n * (n*(n+1))/2 = n^3
  * 
@@ -39,7 +40,6 @@ public class Ex1932 {
 		}
 		
 		dp[1][1] = arr[1][1];
-		
 		for (int i = 2; i < n+1; i++) {
 			dp[i][1] = dp[i-1][1] + arr[i][1];
 			dp[i][i] = dp[i-1][i-1] + arr[i][i];
