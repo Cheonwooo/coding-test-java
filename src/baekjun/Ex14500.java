@@ -23,15 +23,11 @@ import java.util.StringTokenizer;
  */
 
 public class Ex14500 {
-	private static int n, m;
-	prviate static int[][] arr;
-	private static int[][][] tetromino = {
-			{{0,0}, {0,1}, {0,2}, {0,3}},
-			{{0,0}, {0,1}, {1,0}, {1,1}},
-			{{0,0}, {1,0}, {2,0}, {2,1}},
-			{{0,0}, {1,0}, {1,1}, {2,1}},
-			{{0,0}, {0,1}, {0,2}, {1,1}}
-	};
+	private static int n, m, max = Integer.MIN_VALUE;
+	private static int[] dx = {-1, 0, 1, 0};
+	private static int[] dy = {0, 1, 0, -1};
+	private static int[][] arr;
+	private static boolean[][] visited;
 
 	public static void main(String[] args) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -40,6 +36,7 @@ public class Ex14500 {
 		n = Integer.parseInt(st.nextToken());
 		m = Integer.parseInt(st.nextToken());
 		arr = new int[n][m];
+		visited = new boolean[n][m];
 		
 		for (int i = 0; i < n; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -48,28 +45,39 @@ public class Ex14500 {
 			}
 		}
 		
-	}
-	
-	private static void moveTetro() {
-		int max = 0;
-		for (int i = 0; i < tetromino.length; i++) {
-			for (int j = 0; j < n; j++) {
-				for (int k = 0; k < m; k++) {
-					int sum = calculateSum(i, j, k);
-					max = Math.max(sum, max);
-				}
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				visited[i][j] = true;
+				dfs(i, j, arr[i][j], 1);
+				visited[i][j] = false;
 			}
 		}
+		System.out.println(max);
 	}
 	
-	private static int calculateSum(int seq, int x, int y) {
-		int sum = 0;
-		for (int i = 0; i < 4; i++) {
-			int nx = x + tetromino[seq][i][0];
-			int ny = y + tetromino[seq][i][1];
+	private static void dfs(int x, int y, int sum, int depth) {
+		if (depth == 4) { 
+			max = Math.max(sum, max);
+			return;
+		}
+		
+		for (int i = 0 ; i < 4; i++) {
+			int nx = x + dx[i];
+			int ny = y + dy[i];
 			
-			sum += arr[nx][ny];
-		} 
-		return sum;
+			if (nx<0 || nx>=n || ny<0 || ny>=m) continue;
+			
+			if (!visited[nx][ny]) {
+				if (depth == 2) {
+					visited[nx][ny] = true;
+					dfs(x, y, sum + arr[nx][ny], depth+1);
+					visited[nx][ny] = false;
+				}
+				visited[nx][ny] = true;
+				dfs(nx, ny, sum + arr[nx][ny], depth+1);
+				visited[nx][ny] = false;
+			}
+			
+		}
 	}
 }
