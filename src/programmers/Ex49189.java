@@ -28,35 +28,32 @@ public class Ex49189 {
 		
 	}
 	
-	public int solution(int n, int[][] edge) {
-        int answer = 0;
+	public long solution(int n, int[][] edge) {
         
+		d = new int[n+1];
         Arrays.fill(d, INF);
+        d[0] = 0;
 		
 		for (int i = 0; i <=n; i++) {
 			list.add(new ArrayList<>());
 		}
 		
-		for (int i = 0; i < edge.length; i++) {
-			list.get(edge[i][0]).add(new Pair(edge[i][1], 1));
-			list.get(edge[i][1]).add(new Pair(edge[i][0], 1));
-		}
+		Arrays.stream(edge).forEach(anEdge -> {
+			list.get(anEdge[0]).add(new Pair(anEdge[1], 1));
+			list.get(anEdge[1]).add(new Pair(anEdge[0], 1));
+		});
 		
 		dijkstra(1);
 		
-		int max = Integer.MIN_VALUE;
-		int count = 0;
-		for (int i = 1; i <= n; i++) {
-			if (max < d[i]) {
-				count = 1;
-				max = d[i];
-			} else if (max == d[i]) {
-				count++;
-			}
-		}
-		System.out.println(count);
+		int max = Arrays.stream(d)
+				.max()
+				.orElse(Integer.MIN_VALUE);
 		
-        return answer;
+		long count = Arrays.stream(d)
+				.filter(dist -> dist == max)
+				.count();
+		
+        return count;
     }
 	
 	public void dijkstra(int start) {
