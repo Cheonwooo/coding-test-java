@@ -23,25 +23,30 @@ public class Ex1208 {
 			}
 			
 			int answer = 0;
-			while (dumpCount != 0) {
-				dumpCount--;
-				
-				Arrays.sort(dumps);
-				
-				if (dumps[99] - dumps[0] <= 1) {
-					break;
-				}
-				
-				dumps[0]++;
-				dumps[99]--;
-			}
 			
-			Arrays.sort(dumps);
-			
-			answer = dumps[99] - dumps[0];
+			answer = calculateGap(dumps, dumpCount);
 			sb.append(answer).append("\n");
 		}
 		System.out.println(sb);
+	}
+	
+	public static int calculateGap(int[] dumps, int dumpCount) {
+		while (dumpCount != 0) {
+			dumpCount--;
+			
+			Arrays.sort(dumps);
+			
+			if (dumps[99] - dumps[0] <= 1) {
+				break;
+			}
+			
+			dumps[0]++;
+			dumps[99]--;
+		}
+		
+		Arrays.sort(dumps);
+		
+		return dumps[99] - dumps[0];
 	}
 
 }
