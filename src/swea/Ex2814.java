@@ -61,9 +61,7 @@ public class Ex2814 {
 	public static void dfs(int start, int count) {
 		max = Math.max(max, count);
 		
-		for (int i = 0; i < list.get(start).size(); i++) {
-			int nextEdge = list.get(start).get(i);
-			
+		for (int nextEdge : list.get(start)){
 			if (!visited[nextEdge]) {
 				visited[nextEdge] = true;
 				dfs(nextEdge, count+1);
