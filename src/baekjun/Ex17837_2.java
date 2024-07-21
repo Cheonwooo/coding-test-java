@@ -66,7 +66,7 @@ public class Ex17837_2 {
 			for (int i = 0; i < k; i++) {
 				Horse h = horses[i];
 				move(h.x, h.y, i, h.d);
-				printMap();
+//				printMap();
 				if (check()) {
 					out = true;
 					break;
@@ -103,10 +103,6 @@ public class Ex17837_2 {
 	}
 	
 	public static int calculatePollCount(int x, int y, int number) {
-//		[1 2 3 4 5]에서 4번째 말부터 옮겨야 한다면 
-//		pollCount = 4일 떄 [4 5 1 2 3] 이렇게 되고
-//		pq.size - pollcount = 1을 리턴하면 moveWhite와 moveRed에서
-//		반복문을 통해 인덱스가 0부터 리턴값 만큼 빼내도록 구현했습니다!
 		
 		int pollCount = 1;
 		while (true) {
@@ -161,6 +157,10 @@ public class Ex17837_2 {
 		dq[x][y].addFirst(horses[h.number]);
 		
 		if (nx < 0 || nx >= n || ny < 0 || ny >= n || color[nx][ny] == 2) {
+			for (int i = 0; i <= pollCount; i++) {
+				h = dq[x][y].pollFirst();
+				dq[x][y].addLast(h);
+			}
 			return;
 		}
 		if (color[nx][ny] == 0) {
@@ -189,30 +189,40 @@ public class Ex17837_2 {
 		}
 		return false;
 	}
-	public static void printMap() {
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				System.out.print(dq[i][j].size() + " ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				if (dq[i][j].size() != 0) {
-					int size = dq[i][j].size();
-
-					for (int k = 0; k < size; k++) {
-						Horse h = dq[i][j].pollFirst();
-						System.out.print("number = " + h.number + ", dir = " + h.d + "   ||   ");
-						dq[i][j].addLast(h);
-					}
-					System.out.println();
-				}
-			}
-		}
-	}
+//	public static void printMap() {
+//		for (int i = 0; i < n; i++) {
+//			for (int j = 0; j < n; j++) {
+//				System.out.print(dq[i][j].size() + " ");
+//			}
+//			System.out.println();
+//		}
+//		System.out.println();
+//
+//		for (int i = 0; i < n; i++) {
+//			for (int j = 0; j < n; j++) {
+//				if (dq[i][j].size() != 0) {
+//					int size = dq[i][j].size();
+//
+//					for (int k = 0; k < size; k++) {
+//						Horse h = dq[i][j].pollFirst();
+//						System.out.print("number = " + h.number + ", dir = " + h.d + "   ||   ");
+//						dq[i][j].addLast(h);
+//					}
+//					System.out.println();
+//				}
+//			}
+//		}
+//	}
 }
-
+/*
+4 4
+0 0 2 0
+0 0 1 0
+0 0 1 2
+0 1 0 2
+2 1 2
+3 2 3
+2 2 1
+4 3 2 
+ */
 		
