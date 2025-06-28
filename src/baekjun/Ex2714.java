@@ -85,12 +85,11 @@ public class Ex2714 {
 		String answer = "";
 		
 		for (int i = 0; i <= message.length() - 5; i+=5) {
-			String subMessage = message.substring(i, i + 5);
-			
 			int decodeNumber = 0;
-			for (int j = subMessage.length() - 1; j >= 0; j--) {
-				if (subMessage.charAt(j) == '1') {
-					decodeNumber += (int)Math.pow(2, 5-j-1);
+			
+			for (int j = 0; j < 5; j++) {
+				if (message.charAt(i + j) == '1') {
+					decodeNumber |= (1 << (4 - j));
 				}
 			}
 			
