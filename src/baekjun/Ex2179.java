@@ -18,11 +18,13 @@ public class Ex2179 {
 		String[] answer = new String[2];
 		int max = -1;
 		for (int i = 0; i < n; i++) {
+			String wordA = words[i];
+			if (wordA.length() < max) continue;
 			for (int j = 0; j < n; j++) {
 				if (i == j) continue;
-				String wordA = words[i];
 				String wordB = words[j];
 				
+				if (wordB.length() < max) continue;
 				int size = Math.min(wordA.length(), wordB.length());
 				int count = 0;
 				for (int k = 0; k < size; k++) {
