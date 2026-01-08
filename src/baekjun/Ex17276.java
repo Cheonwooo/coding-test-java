@@ -29,11 +29,10 @@ public class Ex17276 {
 				}
 			}
 			
-			if (d > 0) {
-				rotate(d);
-			} else {
-				reverseRotate(-d);
+			if (d < 0) {
+				d += 360;
 			}
+			rotate(d);
 			
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < n; j++) {
@@ -62,23 +61,4 @@ public class Ex17276 {
 			}
 		}
 	}
-	
-	private static void reverseRotate(int d) {
-		for (int r = 0; r < d/45; r++) {
-			int[] temp = new int[n];
-			for (int i = 0; i < n/2; i++) {
-				temp[i] = arr[i][i];
-
-				arr[i][i] = arr[i][n/2];
-				arr[i][n/2] = arr[i][n-1-i];
-				arr[i][n-1-i] = arr[n/2][n-1-i];
-				arr[n/2][n-1-i] = arr[n-1-i][n-1-i];
-				arr[n-1-i][n-1-i] = arr[n-1-i][n/2];
-				arr[n-1-i][n/2] = arr[n-1-i][i];
-				arr[n-1-i][i] = arr[n/2][i];
-				arr[n/2][i] = temp[i];
-			}
-		}
-	}
-
 }
