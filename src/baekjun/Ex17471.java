@@ -8,11 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
+import java.util.stream.IntStream;
 
 public class Ex17471 {
 	
 	private static int n, min = Integer.MAX_VALUE;
-	private static int[] arr, groupA, groupB;
+	private static int[] arr;
 	private static boolean[] check;
 	private static List<Integer>[] graph;
 
@@ -44,27 +45,24 @@ public class Ex17471 {
 		
 		for (int i = 1; i < n/2 + 1; i++) {
 			check = new boolean[n+1];
-			int[] groupA = new int[i];
-			int[] groupB = new int[n-i];
-			makeGroup(0, 0, i, groupA, groupB);
+			makeGroup(0, 0, i);
 		}
 		System.out.println((min == Integer.MAX_VALUE) ? -1 : min);
 	}
 
-	private static void makeGroup(int depth, int start, int groupCountA, int[] groupA, int[] groupB) {
-		if (depth == groupCountA) {
-			int groupAIndex = 0;
-			int groupBIndex = 0;
-			for (int i = 0; i < n; i++) {
-				if (check[i]) {
-					groupA[groupAIndex++] = i+1;
-				} else {
-					groupB[groupBIndex++] = i+1;
-				}
-			}
-			
-//			System.out.println(Arrays.toString(groupA));
-//			System.out.println(Arrays.toString(groupB));
+	private static void makeGroup(int depth, int start, int groupSizeA) {
+		if (depth == groupSizeA) {
+			int[] groupA = buildGroup(true, groupSizeA);
+			int[] groupB = buildGroup(false, n - groupSizeA);
+//			int groupAIndex = 0;
+//			int groupBIndex = 0;
+//			for (int i = 0; i < n; i++) {
+//				if (check[i]) {
+//					groupA[groupAIndex++] = i+1;
+//				} else {
+//					groupB[groupBIndex++] = i+1;
+//				}
+//			}
 			
 			if (isSameGroup(groupA) && isSameGroup(groupB)) {
 				int sumGroupA = calculateSum(groupA);
@@ -77,9 +75,19 @@ public class Ex17471 {
 		
 		for (int i = start; i < n; i++) {
 			check[i] = true;
-			makeGroup(depth + 1, i + 1, groupCountA, groupA, groupB);
+			makeGroup(depth + 1, i + 1, groupSizeA);
 			check[i] = false;
 		}
+	}
+	
+	private static int[] buildGroup(boolean flag, int size) {
+		int[] group = new int[n+1];
+		int index = 0;
+		
+		for (int i = 1; i < n+1; i++) {
+			if (check[i] == flag) group[index++] = i;
+		}
+		return group;
 	}
 	
 	private static boolean isSameGroup(int[] group) {
@@ -93,22 +101,6 @@ public class Ex17471 {
 		boolean[] visited = new boolean[n+1];
 		bfs(startNode, connected, visited);
 		
-//		for (int i = 1; i < n+1; i++) {
-//			if (connected[i]) {
-//				System.out.print("O");
-//			} else {
-//				System.out.print("X");
-//			}
-//		}
-//		System.out.println();
-//		for (int i = 1; i < n+1; i++) {
-//			if (visited[i]) {
-//				System.out.print("O");
-//			} else {
-//				System.out.print("X");
-//			}
-//		}
-//		System.out.println();
 		for (int i = 1; i < n+1; i++) {
 			if (connected[i] && !visited[i]) return false;
 		}
@@ -133,10 +125,6 @@ public class Ex17471 {
 	}
 	
 	private static int calculateSum(int[] group) {
-		int sum = 0;
-		for (int num : group) {
-			sum += arr[num];
-		}
-		return sum;
+		return IntStream.of(group).map(i -> arr[i]).sum();
 	}
 }
