@@ -25,28 +25,24 @@ public class Ex1270 {
 			
 			int max = 0;
 			long representNum = 0;
-			for (long num : map.keySet()) {
-				int count = map.get(num);
-				if (max < count && count > (total / 2)) {
-					max = count;
-					representNum = num;
+			boolean isDuplicated = false;
+			
+			for (Map.Entry<Long, Integer> entry : map.entrySet()) {
+				long num = entry.getKey();
+				int count = entry.getValue();
+				
+				if (count > (total / 2)) { 
+					if (max < count) {
+						representNum = num;
+						max = count;
+						isDuplicated = false;
+					} else if (count == max) {
+						isDuplicated = true;
+					}
 				}
 			}
 			
-			boolean check = false;
-			if (max == 0) {
-				check = true;
-			}
-			
-			for (long num : map.keySet()) {
-				int count = map.get(num);
-				if (representNum != num && max == count) {
-					check = true;
-					break;
-				}
-			}
-			
-			System.out.println((check) ? "SYJKGW" : representNum);
+			System.out.println((max == 0 || isDuplicated) ? "SYJKGW" : representNum);
 		}
 	}
 
